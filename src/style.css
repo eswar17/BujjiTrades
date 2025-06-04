@@ -1,0 +1,104 @@
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f9fafb;
+}
+
+.layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.header {
+  background: #e0f2fe;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1rem;
+}
+
+.logo {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #1e3a8a;
+}
+
+.nav a {
+  margin: 0 12px;
+  color: #1e293b;
+  text-decoration: none;
+  font-size: 1.1rem;
+}
+
+.nav a:hover {
+  color: #2563eb;
+}
+
+.capital {
+  font-weight: 600;
+  color: #047857;
+}
+
+.main {
+  flex: 1;
+  padding: 3rem 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f1f5f9;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2.5rem;
+  width: 100%;
+  max-width: 1400px;
+}
+
+.card {
+  padding: 2rem;
+  border-radius: 1.5rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  background-color: #ffffff;
+}
+
+.card.red { background-color: #fee2e2; }
+.card.yellow { background-color: #fef9c3; }
+.card.green { background-color: #dcfce7; }
+
+.card h2 {
+  margin-bottom: 1rem;
+  font-size: 1.25rem;
+  display: flex;
+  align-items: center;
+}
+
+.card.red h2 { color: #b91c1c; }
+.card.yellow h2 { color: #b45309; }
+.card.green h2 { color: #15803d; }
+
+.card ul {
+  list-style-type: disc;
+  padding-left: 1.5rem;
+  font-size: 1.05rem;
+  color: #1f2937;
+}
+
+.card blockquote {
+  margin-top: 1.5rem;
+  font-style: italic;
+  color: #475569;
+  font-size: 0.95rem;
+}
+
+.footer {
+  text-align: center;
+  font-style: italic;
+  font-size: 0.95rem;
+  background: #e0f2fe;
+  padding: 0.8rem;
+  margin-top: auto;
+}
