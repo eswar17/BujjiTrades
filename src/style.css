@@ -185,3 +185,41 @@ form button:hover {
   background-color: #f5f5f5;
   font-weight: bold;
 }
+
+/* global.css or tailwind.config.js can support this */
+th, td {
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.calendar-input {
+  padding: 6px 10px;
+  font-size: 14px;
+  width: 180px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  appearance: none;
+  background-color: white;
+  background-image: url('data:image/svg+xml;utf8,<svg fill="gray" height="18" viewBox="0 0 24 24" width="18" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  background-size: 16px 16px;
+}
+
+.submit-btn {
+  grid-column: 1 / -1;
+  padding: 6px 12px;
+  background-color: teal;
+  color: white;
+  font-weight: 600;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  max-width: 200px;
+  margin: auto;
+}
+
+.submit-btn:hover {
+  background-color: #006d6d;
+}

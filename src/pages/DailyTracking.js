@@ -2,20 +2,20 @@
 import React, { useState, useEffect } from 'react';
 import { db } from '../firebase';
 import { collection, addDoc, query, orderBy, limit, getDocs } from 'firebase/firestore';
+import { Timestamp } from 'firebase/firestore';
 
 const DailyTracking = () => {
   const initialForm = {
     date: '', capital: '', margin: '', leverage: '',
-    coin: '', entry: '', exit: '', sl: '', target: '',
-    entryReason: '', exitReason: '', mindset: '',
-    type: 'Long', status: 'Win', mistakes: '', goodMoves: ''
+    coin: '', type: 'Long',entry: '', exit: '', sl: '', target: '',
+    entryReason: '', exitReason: '', pnl: '', status: 'Win', mistakes: '', goodMoves: ''
   };
 
   const fieldLabels = {
     date: 'Date', capital: 'Capital', margin: 'Margin', leverage: 'Leverage',
-    coin: 'Coin', entry: 'Entry Price', exit: 'Exit Price', sl: 'Stop Loss', target: 'Target',
-    entryReason: 'Entry Reason', exitReason: 'Exit Reason', mindset: 'Mindset',
-    type: 'Type', status: 'Status', mistakes: 'Mistakes', goodMoves: 'Good Moves'
+    coin: 'Coin', type: 'Type', entry: 'Entry Price', exit: 'Exit Price', sl: 'Stop Loss',
+    target: 'Target', entryReason: 'Entry Reason', exitReason: 'Exit Reason', pnl: 'P&L',
+     status: 'Status', mistakes: 'Mistakes', goodMoves: 'Good Moves'
   };
 
   const [formData, setFormData] = useState(initialForm);
@@ -28,7 +28,12 @@ const DailyTracking = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await addDoc(collection(db, 'dailyTrades'), formData);
+      const dataWithTimestamp = {
+  ...formData,
+  date: Timestamp.fromDate(new Date(formData.date))  // 👈 accurate date
+};
+await addDoc(collection(db, 'dailyTrades'), dataWithTimestamp);
+
       setFormData(initialForm);
       fetchLastTrades();
     } catch (err) {
@@ -36,12 +41,20 @@ const DailyTracking = () => {
     }
   };
 
-  const fetchLastTrades = async () => {
-    const q = query(collection(db, 'dailyTrades'), orderBy('date', 'desc'), limit(3));
-    const querySnapshot = await getDocs(q);
-    const trades = querySnapshot.docs.map(doc => doc.data());
-    setRecentTrades(trades);
-  };
+const fetchLastTrades = async () => {
+  const q = query(collection(db, 'dailyTrades'), orderBy('date', 'desc'), limit(3));
+  const querySnapshot = await getDocs(q);
+  const trades = querySnapshot.docs.map(doc => {
+    const data = doc.data();
+    return {
+      ...data,
+      date: data.date?.toDate 
+        ? data.date.toDate().toLocaleDateString('en-IN')  // timestamp case
+        : data.date                                           // old string case
+    };
+  });
+  setRecentTrades(trades);
+};
 
   useEffect(() => {
     fetchLastTrades();
@@ -57,7 +70,7 @@ const DailyTracking = () => {
               {fieldLabels[key]}
             </label>
             {key === 'type' || key === 'status' ? (
-              <select name={key} value={formData[key]} onChange={handleChange} className="p-2 rounded border">
+              <select name={key} value={formData[key]} required onChange={handleChange} className="p-2 rounded border">
                 {key === 'type' ? (
                   <>
                     <option value="Long">Long</option>
@@ -72,22 +85,25 @@ const DailyTracking = () => {
                 )}
               </select>
             ) : key === 'date' ? (
-              <input type="date" name={key} value={formData[key]} onChange={handleChange} className="p-2 rounded border" />
+              <input type="date" required name={key} value={formData[key]} onChange={handleChange} className="p-2 rounded border" />
             ) : (
-              <input type="text" name={key} value={formData[key]} onChange={handleChange} className="p-2 rounded border" />
+              <input type="text" required name={key} value={formData[key]} onChange={handleChange} className="p-2 rounded border" />
             )}
           </div>
         ))}
-        <button type="submit" className="col-span-full bg-teal-700 text-white py-2 rounded hover:bg-teal-600 font-semibold">
-          Submit
-        </button>
+            <button
+  type="submit"
+  className="submit-btn"
+>
+  Submit
+</button>
       </form>
 
 <h3 style={{ fontSize: '18px', marginTop: '30px' }}>Last 3 Trades</h3>
       <table className="trade-table">
         <thead>
           <tr>
-            {['Date','Coin','Type','Leverage','Entry','Exit','SL','Target','Status','Mistakes','GoodMoves'].map((col) => (
+            {['Date','Coin','Type','Leverage','Entry','Exit','SL','Target','Status','P&L','Mistakes','GoodMoves'].map((col) => (
               <th key={col}>{col}</th>
             ))}
           </tr>
@@ -104,6 +120,7 @@ const DailyTracking = () => {
               <td>{trade.sl}</td>
               <td>{trade.target}</td>
               <td>{trade.status}</td>
+              <td>{trade.pnl}</td>
               <td>{trade.mistakes}</td>
               <td>{trade.goodMoves}</td>
             </tr>
