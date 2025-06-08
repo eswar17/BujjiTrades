@@ -3,8 +3,12 @@ import React, { useState, useEffect } from 'react';
 import { db } from '../firebase';
 import { collection, addDoc, query, orderBy, limit, getDocs } from 'firebase/firestore';
 import { Timestamp } from 'firebase/firestore';
+import { useCapital } from '../pages/CapitalContext';
+
 
 const DailyTracking = () => {
+const { refreshCapital } = useCapital();
+
   const initialForm = {
     date: '', capital: '', margin: '', leverage: '',
     coin: '', type: 'Long',entry: '', exit: '', sl: '', target: '',
@@ -33,7 +37,7 @@ const DailyTracking = () => {
   date: Timestamp.fromDate(new Date(formData.date))  // 👈 accurate date
 };
 await addDoc(collection(db, 'dailyTrades'), dataWithTimestamp);
-
+refreshCapital();
       setFormData(initialForm);
       fetchLastTrades();
     } catch (err) {

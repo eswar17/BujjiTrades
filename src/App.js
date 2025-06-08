@@ -7,12 +7,15 @@ import DailyTracking from './pages/DailyTracking';
 import DailyReview from './pages/DailyReview';
 import MistakeTracker from './pages/MistakeTracker';
 import GoodMovesTracker from './pages/GoodMovesTracker';
+import Metrics from './pages/Metrics';
+import { CapitalProvider } from './pages/CapitalContext';
 
 
 export default function App() {
   return (
     <Router>
       <div className="layout">
+        <CapitalProvider>
         <Header />
         <main className="main">
           <Routes>
@@ -21,9 +24,11 @@ export default function App() {
             <Route path="/daily-review" element={<DailyReview />} />
             <Route path="/mistake-tracker" element={<MistakeTracker />} />
             <Route path="/good-moves-tracker" element={<GoodMovesTracker />} />
+            <Route path="/metrics" element={<Metrics />} />
             {/* Add more routes here later */}
           </Routes>
         </main>
+        </CapitalProvider>
         <Footer />
       </div>
     </Router>
