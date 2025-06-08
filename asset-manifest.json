@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/BujjiTrades/static/css/main.475af29a.css",
-    "main.js": "/BujjiTrades/static/js/main.bdc273ed.js",
+    "main.js": "/BujjiTrades/static/js/main.ff5e0199.js",
     "index.html": "/BujjiTrades/index.html",
     "main.475af29a.css.map": "/BujjiTrades/static/css/main.475af29a.css.map",
-    "main.bdc273ed.js.map": "/BujjiTrades/static/js/main.bdc273ed.js.map"
+    "main.ff5e0199.js.map": "/BujjiTrades/static/js/main.ff5e0199.js.map"
   },
   "entrypoints": [
     "static/css/main.475af29a.css",
-    "static/js/main.bdc273ed.js"
+    "static/js/main.ff5e0199.js"
   ]
 }
