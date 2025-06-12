@@ -1,34 +1,31 @@
-// src/context/CapitalContext.js
-
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useState, useEffect } from 'react';
 import { db } from '../firebase';
-import { collection, getDocs, query, orderBy, limit } from 'firebase/firestore';
+import { collection, query, orderBy, limit, getDocs } from 'firebase/firestore';
 
 const CapitalContext = createContext();
-
-export const useCapital = () => useContext(CapitalContext);
 
 export const CapitalProvider = ({ children }) => {
   const [capital, setCapital] = useState(0);
 
-  const fetchCapital = async () => {
+  const refreshCapital = async () => {
     const q = query(collection(db, 'dailyTrades'), orderBy('date', 'desc'), limit(1));
     const snapshot = await getDocs(q);
-    if (!snapshot.empty) {
-      const data = snapshot.docs[0].data();
-      const cap = parseFloat(data.capital || 0);
-      const pnl = parseFloat(data.pnl || 0);
-      setCapital(cap + pnl); // latest capital = capital + pnl
+    const latest = snapshot.docs[0]?.data();
+    if (latest) {
+      const newCapital = parseFloat(latest.capital) + (parseFloat(latest.pnl) || 0);
+      setCapital(newCapital);
     }
   };
 
   useEffect(() => {
-    fetchCapital();
+    refreshCapital();
   }, []);
 
   return (
-    <CapitalContext.Provider value={{ capital, refreshCapital: fetchCapital }}>
+    <CapitalContext.Provider value={{ capital, refreshCapital }}>
       {children}
     </CapitalContext.Provider>
   );
 };
+
+export const useCapital = () => useContext(CapitalContext);
