@@ -58,8 +58,8 @@ const Metrics = () => {
 
     const summary = {
       totalTrades: result.length,
-      winning: result.filter(t => t.status === 'Win').length,
-      losing: result.filter(t => t.status === 'Loss').length,
+      winning: result.filter(t => t.status === 'WIN').length,
+      losing: result.filter(t => t.status === 'LOSS').length,
       netProfit: result.reduce((acc, t) => acc + (parseFloat(t.pnl) || 0), 0),
       mistakes: result.filter(t => t.mistakes?.trim()).length,
       goodMoves: result.filter(t => t.goodMoves?.trim()).length,
@@ -86,8 +86,8 @@ const Metrics = () => {
           { label: 'Coin', name: 'coin', type: 'select', options: ['All Coins', ...distinctCoins] },
           { label: 'From Date', name: 'from', type: 'date' },
           { label: 'To Date', name: 'to', type: 'date' },
-          { label: 'Position', name: 'type', type: 'select', options: ['All Types', 'Long', 'Short'] },
-          { label: 'Status', name: 'status', type: 'select', options: ['All Status', 'Win', 'Loss'] },
+          { label: 'Position', name: 'type', type: 'select', options: ['All Types', 'LONG', 'SHORT'] },
+          { label: 'Status', name: 'status', type: 'select', options: ['All Status', 'WIN', 'LOSS'] },
         ].map((field, idx) => (
           <div key={idx} style={{ display: 'flex', flexDirection: 'column', minWidth: '140px' }}>
             <label style={{ fontWeight: '500', marginBottom: '5px' }}>{field.label}</label>
@@ -204,7 +204,7 @@ const Metrics = () => {
         <table border="1" cellPadding="6" width="100%">
           <thead>
             <tr>
-              {['Date', 'Coin', 'Type', 'Status', 'Mistake', 'Good Move', 'Margin', 'Leverage', 'Entry', 'Exit', 'P&L'].map((head, idx) => (
+              {['Date', 'Coin', 'Status', 'Mistake', 'Good Move', 'Type', 'Margin', 'Leverage', 'Entry', 'Exit', 'P&L'].map((head, idx) => (
                 <th key={idx}>{head}</th>
               ))}
             </tr>
@@ -214,10 +214,10 @@ const Metrics = () => {
               <tr key={i} style={{ backgroundColor: i % 2 === 0 ? '#f9f9f9' : '#ffffff' }}>
                 <td>{t.date?.toDate?.().toLocaleDateString?.()}</td>
                 <td>{t.coin}</td>
-                <td>{t.type}</td>
-                <td style={{ color: t.status === 'Win' ? 'green' : 'red', fontWeight: 'bold' }}>{t.status}</td>
+                <td style={{ color: t.status === 'WIN' ? 'green' : 'red', fontWeight: 'bold' }}>{t.status}</td>
                 <td>{t.mistakes}</td>
                 <td>{t.goodMoves}</td>
+                <td>{t.type}</td>
                 <td style={{ textAlign: 'right' }}>{t.margin}</td>
                 <td style={{ textAlign: 'right' }}>{t.leverage}</td>
                 <td style={{ textAlign: 'right' }}>{t.entry}</td>
