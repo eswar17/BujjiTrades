@@ -26,7 +26,7 @@ const TradeTracking = () => {
           return {
             ...prev,
             capital: capitalNum.toString(),
-            margin: (capitalNum / 3).toFixed(2),
+            margin: (capitalNum * 1).toFixed(2),
           };
         }
         return prev;
@@ -47,12 +47,12 @@ const TradeTracking = () => {
     exit: '',
     sl: '',
     target: '',
-    entryReason: 'SUPERTREND, RSI',
-    exitReason: 'SUPERTREND, RSI',
+    entryReason: '5MIN ST(10,2 & 10,4) GREEN + 15MIN ST(10,3) UPTREND',
+    exitReason: '',
     pnl: '',
-    status: 'Win',
-    mistakes: 'NO',
-    goodMoves: 'FOLLOWED STRATEGY'
+    status: 'WIN',
+    mistakes: 'NONE',
+    goodMoves: 'PERFECT MULTI-TIMEFRAME CONFIRMATION & PROPER TRAILING EXIT'
   };
 
   const [formData, setFormData] = useState(initialForm);
@@ -97,7 +97,7 @@ const TradeTracking = () => {
     if (name === 'capital' && updatedValue) {
       const capitalNum = parseFloat(updatedValue);
       if (!isNaN(capitalNum)) {
-        updatedForm.margin = (capitalNum / 3).toFixed(2);
+        updatedForm.margin = (capitalNum * 1).toFixed(2);
       }
     }
 
@@ -144,7 +144,7 @@ const TradeTracking = () => {
       setFormData({
         ...initialForm,
         capital: updatedCapital.toString(),
-        margin: (updatedCapital / 3).toFixed(2),
+        margin: (updatedCapital * 1).toFixed(2),
       });
 
       await fetchLastTrades();
@@ -188,7 +188,7 @@ const TradeTracking = () => {
     setFormData({
       ...draft,
       capital: capitalValue,
-      margin: (parseFloat(capitalValue) / 3).toFixed(2),
+      margin: (parseFloat(capitalValue) * 1).toFixed(2),
       date,
       draftId: draft.id
     });
