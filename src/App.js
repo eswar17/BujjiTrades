@@ -3,7 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import HomePage from './pages/HomePage';
-import DailyTracking from './pages/DailyTracking';
+import TradeTracking from './pages/TradeTracking';
 import DailyReview from './pages/DailyReview';
 import MistakeTracker from './pages/MistakeTracker';
 import GoodMovesTracker from './pages/GoodMovesTracker';
@@ -20,7 +20,7 @@ export default function App() {
           <Routes>
 		    <Route path="/" element={<Navigate to="/home" />} />
             <Route path="/home" element={<HomePage />} />
-            <Route path="/daily-tracking" element={<DailyTracking />} />
+            <Route path="/trade-tracking" element={<TradeTracking />} />
             <Route path="/daily-review" element={<DailyReview />} />
             <Route path="/mistake-tracker" element={<MistakeTracker />} />
             <Route path="/good-moves-tracker" element={<GoodMovesTracker />} />

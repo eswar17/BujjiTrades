@@ -43,7 +43,7 @@ body {
 
 .main {
   flex: 1;
-  /*padding: 3rem 1rem;*/
+  padding: 3rem 1rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -222,4 +222,30 @@ th, td {
 
 .submit-btn:hover {
   background-color: #006d6d;
+}
+
+.table-input {
+  padding: 4px 6px;
+  font-size: 14px;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.loader-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.loader-box {
+  background: white;
+  padding: 20px 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  font-weight: 500;
+  color: #2563eb;
 }
